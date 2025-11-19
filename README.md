@@ -117,10 +117,12 @@ owly/
 ├── dist/                   # Production build output
 ├── node_modules/           # Dependencies
 ├── src/                    # Source files
-│   ├── index.html         # HTML template
-│   ├── index.js           # Entry point
-│   ├── fetch.js           # API logic and book display
-│   └── style.css          # Application styles
+│   ├── css/               # CSS folder
+│   │   └── style.css      # Application styles
+│   ├── js/                # JavaScript folder
+│   │   ├── index.js       # Entry point
+│   │   └── fetch.js       # API logic and book display
+│   └── index.html         # HTML template
 ├── .env                    # Environment variables (not in git)
 ├── .env.example           # Environment variables template
 ├── .gitignore             # Git ignore rules

@@ -1,5 +1,5 @@
 // Import CSS
-import './style.css';
+import '../css/style.css';
 
 // Import lodash for debounce
 import _ from 'lodash';

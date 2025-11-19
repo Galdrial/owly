@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  // Punto di ingresso: file JavaScript principale
-  entry: './src/index.js',
+  // Entry point: main JavaScript file
+  entry: './src/js/index.js',
   
   // Dove salvare il bundle finale
   output: {
