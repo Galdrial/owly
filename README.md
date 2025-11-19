@@ -9,16 +9,16 @@ A modern, responsive web application for searching and exploring books by catego
 
 ## 📋 Table of Contents
 
-- [Features](#features)
-- [Demo](#demo)
-- [Screenshots](#screenshots)
-- [Technologies](#technologies)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Environment Variables](#environment-variables)
-- [Build](#build)
-- [API Reference](#api-reference)
+- [✨ Features](#-features)
+- [🎯 Demo](#-demo)
+- [📸 Screenshots](#-screenshots)
+- [🛠️ Technologies](#️-technologies)
+- [📦 Installation](#-installation)
+- [🚀 Usage](#-usage)
+- [📁 Project Structure](#-project-structure)
+- [🔐 Environment Variables](#-environment-variables)
+- [🏗️ Build](#️-build)
+- [📡 API Reference](#-api-reference)
 
 ## ✨ Features
 
@@ -34,7 +34,7 @@ A modern, responsive web application for searching and exploring books by catego
 
 ## 🎯 Demo
 
-[Live Demo](https://galdrial.github.io/owly/) <!-- Deploy with GitHub Pages or Vercel -->
+[Live Demo](https://owly-three.vercel.app/) <!-- Deploy with GitHub Pages or Vercel -->
 
 ## 📸 Screenshots
 
