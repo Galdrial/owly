@@ -7,14 +7,14 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     color: #333;
     flex-direction: column;
-    padding-top: 3rem;
+    padding: 3rem 1rem 0;
 }
 
 #app {
@@ -39,6 +39,9 @@ body {
     margin-bottom: auto;
     transition: margin 0.5s ease-out;
     position: relative;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 1rem;
 }
 
 body.has-results #search {
@@ -47,7 +50,7 @@ body.has-results #search {
 }
 
 .loading-spinner {
-    color: #667eea;
+    color: white;
     font-size: 1.2rem;
     position: absolute;
     top: 100%;
@@ -58,19 +61,9 @@ body.has-results #search {
 }
 
 .search-input-container {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+    position: relative;
     width: 100%;
-    max-width: 600px;
-    flex-direction: column;
-}
-
-/* Desktop: input e button sulla stessa riga */
-@media (min-width: 768px) {
-    .search-input-container {
-        flex-direction: row;
-    }
+    max-width: 800px;
 }
 
 
@@ -108,7 +101,7 @@ body.has-results #search {
 }
 
 h1 {
-    color: #667eea;
+    color: white;
     margin-bottom: 1rem;
     font-size: 2.5rem;
 }
@@ -119,53 +112,62 @@ p {
     font-size: 1.1rem;
 }
 
-button {
+.search-button {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 1rem 2rem;
     border-radius: 50px;
-    font-size: 1.1rem;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    margin: 0;
-    white-space: nowrap;
-    width: 100%;
-}
-
-@media (min-width: 768px) {
-    button {
-        width: auto;
-    }
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 input {
-    background: transparent;
+    background: white;
     border: 2px solid #667eea;
-    color: black;
-    padding: 1rem 2rem;
+    color: #666 !important;
+    padding: 1rem 4rem 1rem 2rem;
     border-radius: 50px;
     font-size: 1.1rem;
-    cursor: pointer;
+    cursor: text;
     transition: transform 0.2s, box-shadow 0.2s;
     margin: 0;
     width: 100%;
 }
 
-@media (min-width: 768px) {
-    input {
-        flex: 1;
-        width: auto;
-    }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #555 !important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
+
+
 
 input:focus, input:active {
     outline: none;
     border: 2px solid #667eea;
 }
 
-button:hover, input:hover, .book-card:hover {
-    transform: translateY(-2px);
+.search-button:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+}
+
+.search-button:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+input:hover, .book-card:hover {
+    /* transform: translateY(-2px); */
     box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
 }
 
