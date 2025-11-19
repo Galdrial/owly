@@ -132,6 +132,16 @@ export function fetchBook() {
             loadingDiv.style.padding = '1rem 2rem';
             loadingDiv.style.borderRadius = '10px';
             
+            // Hide error after 3 seconds
+            setTimeout(() => {
+                loadingDiv.style.display = 'none';
+                loadingDiv.style.background = '';
+                loadingDiv.style.padding = '';
+                loadingDiv.style.borderRadius = '';
+                loadingDiv.style.color = '';
+                loadingDiv.innerHTML = '⏳ Loading...';
+            }, 3000);
+            
             document.body.classList.remove('has-results');
             // Clear app div
             const appDiv = document.getElementById("app");
