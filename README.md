@@ -34,7 +34,7 @@ A modern, responsive web application for searching and exploring books by catego
 
 ## 🎯 Demo
 
-[Live Demo](#) <!-- Add your deployed URL here -->
+[Live Demo](https://galdrial.github.io/owly/) <!-- Deploy with GitHub Pages or Vercel -->
 
 ## 📸 Screenshots
 
@@ -73,7 +73,7 @@ Coming soon...
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/owly.git
+git clone https://github.com/Galdrial/owly.git
 cd owly
 ```
 
@@ -262,9 +262,9 @@ This project is licensed under the MIT License.
 
 ## 👤 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Project: [Owly](https://github.com/yourusername/owly)
+**Galdrial**
+- GitHub: [@Galdrial](https://github.com/Galdrial)
+- Project: [Owly](https://github.com/Galdrial/owly)
 
 ## 🙏 Acknowledgments
 
