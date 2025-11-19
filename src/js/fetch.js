@@ -123,18 +123,19 @@ export function fetchBook() {
         }
         catch(error){
             console.error(error);
-            // Hide loading and remove class from body when showing error
+            // Show error in loading div
             const loadingDiv = document.getElementById("loading");
-            loadingDiv.style.display = 'none';
+            loadingDiv.style.display = 'block';
+            loadingDiv.innerHTML = `⚠️ ${error.message}`;
+            loadingDiv.style.color = '#c00';
+            loadingDiv.style.background = '#ffe0e0';
+            loadingDiv.style.padding = '1rem 2rem';
+            loadingDiv.style.borderRadius = '10px';
+            
             document.body.classList.remove('has-results');
-            // Show error to user
+            // Clear app div
             const appDiv = document.getElementById("app");
-            appDiv.innerHTML = `
-                <div style="background: #ffe0e0; color: #c00; padding: 1rem; border-radius: 10px; text-align: center;">
-                    <h3>⚠️</h3><br>
-                    <p>${error.message}</p>
-                </div>
-            `;
+            appDiv.innerHTML = '';
         }
     }
 }
