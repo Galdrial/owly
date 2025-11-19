@@ -11,6 +11,15 @@ console.log('🦉 Owly App loaded!');
 
 const button = document.querySelector('button');
 const input = document.getElementById('searchName');
+const title = document.querySelector('h1');
+
+// Click on title to reload page
+title.addEventListener('click', () => {
+    location.reload();
+});
+
+// Add pointer cursor to title
+title.style.cursor = 'pointer';
 
 // Create debounced version of search (delay 500ms)
 const debouncedSearch = _.debounce(() => {

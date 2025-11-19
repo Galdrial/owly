@@ -39,9 +39,11 @@ export function fetchBook() {
                 throw new Error("No books found for this search.");
             }
             
-            // Clear previous results and show loading message
+            // Clear previous results and show loading
             const appDiv = document.getElementById("app");
-            appDiv.innerHTML = '<div style="padding: 2rem; text-align: center; color: #667eea;">⏳ Loading...</div>';
+            appDiv.innerHTML = '';
+            const loadingDiv = document.getElementById("loading");
+            loadingDiv.style.display = 'block';
             
             // Create all cards with Promises to wait for image loading
             const cardPromises = data.works.map((work) => {
@@ -101,7 +103,8 @@ export function fetchBook() {
             // Wait for all images to load
             const cards = await Promise.all(cardPromises);
             
-            // Now show all cards together
+            // Hide loading and show cards
+            loadingDiv.style.display = 'none';
             appDiv.innerHTML = '';
             cards.forEach((card, index) => {
                 appDiv.appendChild(card);
@@ -111,9 +114,19 @@ export function fetchBook() {
                     card.style.opacity = "1";
                 }, index * 50);
             });
+            
+            // Add class to body for layout adjustment AFTER cards are in DOM
+            // Use setTimeout to trigger after the DOM has updated
+            setTimeout(() => {
+                document.body.classList.add('has-results');
+            }, 50);
         }
         catch(error){
             console.error(error);
+            // Hide loading and remove class from body when showing error
+            const loadingDiv = document.getElementById("loading");
+            loadingDiv.style.display = 'none';
+            document.body.classList.remove('has-results');
             // Show error to user
             const appDiv = document.getElementById("app");
             appDiv.innerHTML = `
