@@ -6,53 +6,53 @@ module.exports = {
   // Entry point: main JavaScript file
   entry: './src/assets/js/index.js',
   
-  // Dove salvare il bundle finale
+  // Where to save the final bundle
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true, // Pulisce la cartella dist ad ogni build
+    clean: true, // Clean dist folder on each build
   },
   
-  // Modalità di sviluppo (cambia a 'production' per la produzione)
+  // Development mode (change to 'production' for production)
   mode: 'development',
   
-  // Source maps per debugging
+  // Source maps for debugging
   devtool: 'inline-source-map',
   
-  // Configurazione del dev server
+  // Dev server configuration
   devServer: {
     static: './dist',
     port: 3000,
-    open: true, // Apre automaticamente il browser
+    open: true, // Automatically open browser
     hot: true,  // Hot Module Replacement
   },
   
-  // Loaders per gestire diversi tipi di file
+  // Loaders to handle different file types
   module: {
     rules: [
       {
-        // Per i file CSS
+        // For CSS files
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
       {
-        // Per le immagini
+        // For images
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
       {
-        // Per i font
+        // For fonts
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
     ],
   },
   
-  // Plugin
+  // Plugins
   plugins: [
-    // Carica variabili d'ambiente dal file .env
+    // Load environment variables from .env file
     new Dotenv(),
-    // Genera automaticamente index.html che include il bundle
+    // Automatically generate index.html with bundle included
     new HtmlWebpackPlugin({
       template: './src/index.html',
       title: 'Owly App',

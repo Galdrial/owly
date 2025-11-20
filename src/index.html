@@ -12,19 +12,24 @@
 </head>
 
 <body>
-    <main>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <header>
         <div id="search">
             <h1>Owly</h1>
             <div class="search-input-container">
-                <input type="text" id="searchName" placeholder="Enter book subject">
-                <button class="search-button"><i class="fa-duotone fa-solid fa-magnifying-glass"></i></button>
+                <label for="searchName" class="visually-hidden">Search books by subject</label>
+                <input type="text" id="searchName" placeholder="Search books by subject" aria-describedby="search-hint">
+                <span id="search-hint" class="visually-hidden">Enter a subject and press enter or click the search button</span>
+                <button class="search-button" aria-label="Search books"><i class="fa-duotone fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
             </div>
             <h2>Interactive and inclusive primary education for everyone's success</h2>
-            <div id="loading" class="loading-spinner" style="display: none;">⏳ Loading...</div>
+            <div id="loading" class="loading-spinner" role="status" aria-live="polite" style="display: none;"><span aria-label="Loading">⏳</span> Loading...</div>
         </div>
-        <div id="app"></div>
+    </header>
+    <main id="main-content">
+        <div id="app" role="region" aria-live="polite" aria-label="Search results"></div>
         <!-- Back to top button -->
-        <button id="backToTop" class="back-to-top" title="Back to top">▲</button>
+        <button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top"><span aria-hidden="true">▲</span></button>
     </main>
     <footer>
         

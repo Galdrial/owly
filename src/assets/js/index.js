@@ -18,8 +18,19 @@ title.addEventListener('click', () => {
     location.reload();
 });
 
-// Add pointer cursor to title
+// Add pointer cursor to title and make it keyboard accessible
 title.style.cursor = 'pointer';
+title.setAttribute('tabindex', '0');
+title.setAttribute('role', 'button');
+title.setAttribute('aria-label', 'Reload page');
+
+// Keyboard support for title
+title.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        location.reload();
+    }
+});
 
 // Create debounced version of search (delay 500ms)
 const debouncedSearch = _.debounce(() => {

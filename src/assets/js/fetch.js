@@ -49,9 +49,12 @@ export function fetchBook() {
             const cardPromises = data.works.map((work) => {
                 return new Promise((resolve) => {
                     // Card
-                    const card = document.createElement("div");
+                    const card = document.createElement("article");
                     card.className = "book-card";
                     card.style.opacity = "0";
+                    card.setAttribute('role', 'article');
+                    card.setAttribute('tabindex', '0');
+                    card.setAttribute('aria-label', `${work.title} - Click for more details`);
                     
                     // Title
                     const titleElement = document.createElement("h3");
@@ -97,6 +100,14 @@ export function fetchBook() {
                     
                     // Add click listener to show description
                     card.addEventListener('click', () => showBookDescription(work));
+                    
+                    // Add keyboard support
+                    card.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            showBookDescription(work);
+                        }
+                    });
                 });
             });
             
@@ -170,23 +181,38 @@ async function showBookDescription(work) {
             modal = document.createElement('div');
             modal.id = 'book-modal';
             modal.className = 'modal';
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+            modal.setAttribute('aria-labelledby', 'modal-title');
             modal.innerHTML = `
                 <div class="modal-content">
-                    <span class="close">&times;</span>
+                    <button class="close" aria-label="Close dialog">&times;</button>
                     <div id="modal-body"></div>
                 </div>
             `;
             document.body.appendChild(modal);
             
+            const closeBtn = modal.querySelector('.close');
+            
             // Click on X to close
-            modal.querySelector('.close').addEventListener('click', () => {
+            closeBtn.addEventListener('click', () => {
                 modal.style.display = 'none';
+                document.body.style.overflow = '';
             });
             
             // Click outside modal to close
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // ESC key to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
                 }
             });
         }
@@ -195,6 +221,12 @@ async function showBookDescription(work) {
         const modalBody = document.getElementById('modal-body');
         modalBody.innerHTML = '<p style="text-align: center; padding: 2rem;">⏳ Loading...</p>';
         modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Focus trap - focus on close button
+        setTimeout(() => {
+            modal.querySelector('.close').focus();
+        }, 100);
         
         // Use axios to retrieve book details
         const bookKey = work.key; // e.g.: "/works/OL45804W"
@@ -222,7 +254,7 @@ async function showBookDescription(work) {
         modalBody.innerHTML = `
             <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
                 <div style="flex: 1; min-width: 300px;">
-                    <h2 style="color: #667eea; margin-bottom: 1rem;">${work.title}</h2>
+                    <h2 id="modal-title" style="color: #667eea; margin-bottom: 1rem;">${work.title}</h2>
                     <p style="color: #666; margin-bottom: 0.5rem;"><strong>Author:</strong> ${authors}</p>
                     <p style="color: #666; margin-bottom: 1rem;"><strong>Year:</strong> ${year}</p>
                     <h3 style="color: #764ba2; margin-bottom: 0.5rem;">Description</h3>

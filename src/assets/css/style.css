@@ -1,4 +1,4 @@
-/* Reset e stili base */
+/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -16,6 +16,20 @@ body {
     color: #333;
     flex-direction: column;
     padding: 3rem 1rem 0;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #app {
@@ -126,9 +140,18 @@ footer a:hover {
     cursor: pointer;
 }
 
+.book-card:hover,
+.book-card:focus {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
 
+.book-card:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 3px;
+}
 
-/* Nascondi #app se è vuoto */
+/* Hide #app if empty */
 #app:empty {
     display: none;
 }
@@ -148,6 +171,13 @@ h1 {
     color: white;
     margin-bottom: 2rem;
     font-size: 6rem;
+    outline: none;
+}
+
+h1:focus {
+    outline: 3px solid white;
+    outline-offset: 5px;
+    border-radius: 10px;
 }
 
 h2 {
@@ -204,15 +234,54 @@ input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
 
+/* Skip link for accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #667eea;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    z-index: 100;
+    border-radius: 0 0 5px 0;
+}
 
+.skip-link:focus {
+    top: 0;
+}
+
+/* Visually hidden but accessible to screen readers */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
 
 input:focus, input:active {
-    outline: none;
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
     border: 2px solid #667eea;
 }
 
 .search-button:hover {
     transform: translateY(-50%) scale(1.05);
+}
+
+.search-button:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+}
+
+button:focus, a:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
 }
 
@@ -284,11 +353,19 @@ img {
     font-weight: bold;
     cursor: pointer;
     transition: color 0.2s;
+    background: transparent !important;
+    border: none;
+    padding: 0;
+    line-height: 1;
+    box-shadow: none !important;
 }
 
 .close:hover,
 .close:focus {
     color: #667eea;
+    outline: none;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
 /* Back to top button */
@@ -322,6 +399,11 @@ img {
 .back-to-top:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.back-to-top:focus {
+    outline: 3px solid white;
+    outline-offset: 2px;
 }
 
 .back-to-top:active {
