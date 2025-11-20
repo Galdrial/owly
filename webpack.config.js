@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   // Entry point: main JavaScript file
@@ -56,6 +57,16 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       title: 'Owly App',
+    }),
+    // Copy static assets to dist folder
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/assets/screenshots',
+          to: 'screenshots',
+          noErrorOnMissing: true, // Don't error if folder is empty
+        },
+      ],
     }),
   ],
 };
