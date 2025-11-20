@@ -118,7 +118,15 @@ footer a:hover {
     max-width: 800px;
 }
 
-
+.search-input-container .fa-book {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #667eea;
+    pointer-events: none;
+    z-index: 1;
+}
 
 .book-card {
     background: white;
@@ -221,7 +229,7 @@ input {
     background: white;
     border: 2px solid #667eea;
     color: #666 !important;
-    padding: 1rem 4rem 1rem 2rem;
+    padding: 1rem 4rem 1rem 3.5rem;
     border-radius: 50px;
     font-size: 1.1rem;
     cursor: text;
