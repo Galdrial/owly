@@ -1,5 +1,5 @@
 import axios from 'axios';
-import _ from 'lodash';
+import { get } from 'lodash-es';
 
 // Configure axios with timeout and base URL
 const api = axios.create({
@@ -61,12 +61,12 @@ export function fetchBook() {
                     titleElement.textContent = work.title;
                     titleElement.style.display = 'block';
                     
-                    // Image with _.get for safe access
+                    // Image with get for safe access
                     const imgElement = document.createElement('img');
-                    const coverId = _.get(work, 'cover_id') || _.get(work, 'cover_edition_key');
+                    const coverId = get(work, 'cover_id') || get(work, 'cover_edition_key');
                     
                     if (coverId) {
-                        if (_.get(work, 'cover_id')) {
+                        if (get(work, 'cover_id')) {
                             imgElement.src = `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
                         } else {
                             imgElement.src = `https://covers.openlibrary.org/b/olid/${coverId}-M.jpg`;
@@ -75,7 +75,7 @@ export function fetchBook() {
                         imgElement.src = 'https://openlibrary.org/images/icons/avatar_book-sm.png';
                     }
                     
-                    imgElement.alt = _.get(work, 'title', 'Book');
+                    imgElement.alt = get(work, 'title', 'Book');
                     
                     // When image is loaded
                     imgElement.onload = () => {
@@ -88,9 +88,9 @@ export function fetchBook() {
                         this.onload = () => resolve(card);
                     };
                     
-                    // Author with _.get for safe access
+                    // Author with get for safe access
                     const authorElement = document.createElement('p');
-                    const authorName = _.get(work, 'authors[0].name', 'Unknown author');
+                    const authorName = get(work, 'authors[0].name', 'Unknown author');
                     authorElement.textContent = authorName;
                     authorElement.style.display = 'block';
                     
@@ -234,20 +234,20 @@ async function showBookDescription(work) {
         
         const bookDetails = response.data;
         
-        // Use _.get for safe data access
-        const description = _.get(bookDetails, 'description.value') || 
-                           _.get(bookDetails, 'description') || 
+        // Use get for safe data access
+        const description = get(bookDetails, 'description.value') || 
+                           get(bookDetails, 'description') || 
                            'Description not available';
         
-        // Authors with _.get
-        const authorsList = _.get(work, 'authors', []);
+        // Authors with get
+        const authorsList = get(work, 'authors', []);
         const authors = authorsList.length > 0 
-            ? authorsList.map(a => _.get(a, 'name', 'Unknown')).join(', ')
+            ? authorsList.map(a => get(a, 'name', 'Unknown')).join(', ')
             : 'Unknown author';
         
-        // Publication year with _.get
-        const year = _.get(bookDetails, 'first_publish_date') || 
-                     _.get(work, 'first_publish_year') || 
+        // Publication year with get
+        const year = get(bookDetails, 'first_publish_date') || 
+                     get(work, 'first_publish_year') || 
                      'Unknown year';
         
         // Populate the modal

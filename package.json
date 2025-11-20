@@ -22,6 +22,10 @@
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
     "html-webpack-plugin": "^5.6.4",
+    "image-minimizer-webpack-plugin": "^4.1.4",
+    "imagemin": "^9.0.1",
+    "imagemin-pngquant": "^10.0.0",
+    "imagemin-svgo": "^11.0.1",
     "style-loader": "^4.0.0",
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1",
@@ -29,6 +33,6 @@
   },
   "dependencies": {
     "axios": "^1.13.2",
-    "lodash": "^4.17.21"
+    "lodash-es": "^4.17.21"
   }
 }

@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 module.exports = {
   // Entry point: main JavaScript file
@@ -49,6 +50,24 @@ module.exports = {
     ],
   },
   
+  // Optimization
+  optimization: {
+    minimizer: [
+      '...',
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            plugins: [
+              ['imagemin-pngquant', { quality: [0.65, 0.80], speed: 4 }],
+              ['imagemin-svgo', { plugins: [{ name: 'preset-default' }] }],
+            ],
+          },
+        },
+      }),
+    ],
+  },
+
   // Plugins
   plugins: [
     // Load environment variables from .env file
@@ -58,13 +77,13 @@ module.exports = {
       template: './src/index.html',
       title: 'Owly App',
     }),
-    // Copy static assets to dist folder
+    // Copy static assets to dist folder with image optimization
     new CopyWebpackPlugin({
       patterns: [
         {
           from: 'src/assets/screenshots',
           to: 'screenshots',
-          noErrorOnMissing: true, // Don't error if folder is empty
+          noErrorOnMissing: true,
         },
       ],
     }),
