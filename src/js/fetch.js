@@ -4,7 +4,7 @@ import _ from 'lodash';
 // Configure axios with timeout and base URL
 const api = axios.create({
     baseURL: process.env.API_BASE_URL || 'https://openlibrary.org',
-    timeout: parseInt(process.env.API_TIMEOUT) || 5000,
+    timeout: parseInt(process.env.API_TIMEOUT) || 15000,
 });
 
 export function fetchBook() {
@@ -17,7 +17,7 @@ export function fetchBook() {
                 throw new Error("Please enter a search term!");
             }
             
-            const MAX_RESULTS = parseInt(process.env.MAX_RESULTS) || 100;
+            const MAX_RESULTS = parseInt(process.env.MAX_RESULTS) || 50;
             
             // OpenLibrary uses underscores instead of spaces in subjects
             const formattedSearch = searchName.toLowerCase().replace(/\s+/g, '_');
@@ -126,13 +126,24 @@ export function fetchBook() {
             // Show error in loading div
             const loadingDiv = document.getElementById("loading");
             loadingDiv.style.display = 'block';
-            loadingDiv.innerHTML = `⚠️ ${error.message}`;
+            
+            // Custom error messages
+            let errorMessage = error.message;
+            if (error.code === 'ECONNABORTED') {
+                errorMessage = 'Server too slow. Please try again.';
+            } else if (error.response?.status === 404) {
+                errorMessage = 'No books found for this search.';
+            } else if (!navigator.onLine) {
+                errorMessage = 'No internet connection.';
+            }
+            
+            loadingDiv.innerHTML = `⚠️ ${errorMessage}`;
             loadingDiv.style.color = '#c00';
             loadingDiv.style.background = '#ffe0e0';
             loadingDiv.style.padding = '1rem 2rem';
             loadingDiv.style.borderRadius = '10px';
             
-            // Hide error after 3 seconds
+            // Hide error after 5 seconds
             setTimeout(() => {
                 loadingDiv.style.display = 'none';
                 loadingDiv.style.background = '';
@@ -140,7 +151,7 @@ export function fetchBook() {
                 loadingDiv.style.borderRadius = '';
                 loadingDiv.style.color = '';
                 loadingDiv.innerHTML = '⏳ Loading...';
-            }, 3000);
+            }, 5000);
             
             document.body.classList.remove('has-results');
             // Clear app div
