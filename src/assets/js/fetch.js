@@ -32,12 +32,13 @@ export function fetchBook() {
 
             const data = response.data;
             console.log(data);
-            console.log(`Max results requested: ${MAX_RESULTS}, Received: ${data.works.length}`);
             
-            // Check if there are results
+            // Check if there are results BEFORE showing loading
             if(!data.works || data.works.length === 0){
                 throw new Error('No books found for this search.');
             }
+            
+            console.log(`Max results requested: ${MAX_RESULTS}, Received: ${data.works.length}`);
             
             // Clear previous results and show loading
             const appDiv = document.getElementById('app');
@@ -48,6 +49,11 @@ export function fetchBook() {
             // Create all cards with Promises to wait for image loading
             const cardPromises = data.works.map((work) => {
                 return new Promise((resolve) => {
+                    // Timeout after 5 seconds if image doesn't load
+                    const timeout = setTimeout(() => {
+                        resolve(card);
+                    }, 5000);
+                    
                     // Card
                     const card = document.createElement('article');
                     card.className = 'book-card';
@@ -83,11 +89,13 @@ export function fetchBook() {
                     
                     // When image is loaded
                     imgElement.onload = () => {
+                        clearTimeout(timeout);
                         resolve(card);
                     };
                     
                     // If image fails, use placeholder and resolve anyway
                     imgElement.onerror = function() {
+                        clearTimeout(timeout);
                         this.src = 'https://openlibrary.org/images/icons/avatar_book-lg.png';
                         this.onload = () => resolve(card);
                     };
