@@ -1,9 +1,6 @@
 // Import CSS
 import '../css/style.css';
 
-// Import lodash for debounce
-import _ from 'lodash';
-
 // Import module
 import { fetchBook } from './fetch';
 
@@ -31,11 +28,6 @@ title.addEventListener('keypress', (e) => {
         location.reload();
     }
 });
-
-// Create debounced version of search (delay 500ms)
-const debouncedSearch = _.debounce(() => {
-    fetchBook();
-}, 500);
 
 // Click on button
 button.addEventListener('click', () => {
@@ -65,7 +57,7 @@ window.addEventListener('scroll', () => {
 backToTopButton.addEventListener('click', () => {
     window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: 'smooth',
     });
 });
     

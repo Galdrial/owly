@@ -11,10 +11,10 @@ export function fetchBook() {
     fetchData();
     async function fetchData(){
         try{
-            const searchName= document.getElementById("searchName").value.trim();
+            const searchName= document.getElementById('searchName').value.trim();
             
             if (!searchName) {
-                throw new Error("Please enter a search term!");
+                throw new Error('Please enter a search term!');
             }
             
             const MAX_RESULTS = parseInt(process.env.MAX_RESULTS) || 50;
@@ -26,8 +26,8 @@ export function fetchBook() {
             const response = await api.get(`/subjects/${formattedSearch}.json`, {
                 params: {
                     limit: MAX_RESULTS,
-                    offset: 0
-                }
+                    offset: 0,
+                },
             });
 
             const data = response.data;
@@ -36,33 +36,33 @@ export function fetchBook() {
             
             // Check if there are results
             if(!data.works || data.works.length === 0){
-                throw new Error("No books found for this search.");
+                throw new Error('No books found for this search.');
             }
             
             // Clear previous results and show loading
-            const appDiv = document.getElementById("app");
+            const appDiv = document.getElementById('app');
             appDiv.innerHTML = '';
-            const loadingDiv = document.getElementById("loading");
+            const loadingDiv = document.getElementById('loading');
             loadingDiv.style.display = 'block';
             
             // Create all cards with Promises to wait for image loading
             const cardPromises = data.works.map((work) => {
                 return new Promise((resolve) => {
                     // Card
-                    const card = document.createElement("article");
-                    card.className = "book-card";
-                    card.style.opacity = "0";
+                    const card = document.createElement('article');
+                    card.className = 'book-card';
+                    card.style.opacity = '0';
                     card.setAttribute('role', 'article');
                     card.setAttribute('tabindex', '0');
                     card.setAttribute('aria-label', `${work.title} - Click for more details`);
                     
                     // Title
-                    const titleElement = document.createElement("h3");
+                    const titleElement = document.createElement('h3');
                     titleElement.textContent = work.title;
-                    titleElement.style.display = "block";
+                    titleElement.style.display = 'block';
                     
                     // Image with _.get for safe access
-                    const imgElement = document.createElement("img");
+                    const imgElement = document.createElement('img');
                     const coverId = _.get(work, 'cover_id') || _.get(work, 'cover_edition_key');
                     
                     if (coverId) {
@@ -72,7 +72,7 @@ export function fetchBook() {
                             imgElement.src = `https://covers.openlibrary.org/b/olid/${coverId}-M.jpg`;
                         }
                     } else {
-                        imgElement.src = `https://openlibrary.org/images/icons/avatar_book-sm.png`;
+                        imgElement.src = 'https://openlibrary.org/images/icons/avatar_book-sm.png';
                     }
                     
                     imgElement.alt = _.get(work, 'title', 'Book');
@@ -84,15 +84,15 @@ export function fetchBook() {
                     
                     // If image fails, use placeholder and resolve anyway
                     imgElement.onerror = function() {
-                        this.src = "https://openlibrary.org/images/icons/avatar_book-lg.png";
+                        this.src = 'https://openlibrary.org/images/icons/avatar_book-lg.png';
                         this.onload = () => resolve(card);
                     };
                     
                     // Author with _.get for safe access
-                    const authorElement = document.createElement("p");
+                    const authorElement = document.createElement('p');
                     const authorName = _.get(work, 'authors[0].name', 'Unknown author');
                     authorElement.textContent = authorName;
-                    authorElement.style.display = "block";
+                    authorElement.style.display = 'block';
                     
                     card.appendChild(titleElement);
                     card.appendChild(imgElement);
@@ -122,7 +122,7 @@ export function fetchBook() {
                 // Staggered fade-in animation
                 setTimeout(() => {
                     card.style.transition = 'opacity 0.3s ease-in';
-                    card.style.opacity = "1";
+                    card.style.opacity = '1';
                 }, index * 50);
             });
             
@@ -135,7 +135,7 @@ export function fetchBook() {
         catch(error){
             console.error(error);
             // Show error in loading div
-            const loadingDiv = document.getElementById("loading");
+            const loadingDiv = document.getElementById('loading');
             loadingDiv.style.display = 'block';
             
             // Custom error messages
@@ -166,7 +166,7 @@ export function fetchBook() {
             
             document.body.classList.remove('has-results');
             // Clear app div
-            const appDiv = document.getElementById("app");
+            const appDiv = document.getElementById('app');
             appDiv.innerHTML = '';
         }
     }
@@ -219,7 +219,7 @@ async function showBookDescription(work) {
         
         // Show loading
         const modalBody = document.getElementById('modal-body');
-        modalBody.innerHTML = '<p style="text-align: center; padding: 2rem;">⏳ Loading...</p>';
+        modalBody.innerHTML = '<p class="modal-loading">⏳ Loading...</p>';
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
         
@@ -252,13 +252,13 @@ async function showBookDescription(work) {
         
         // Populate the modal
         modalBody.innerHTML = `
-            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px;">
-                    <h2 id="modal-title" style="color: #667eea; margin-bottom: 1rem;">${work.title}</h2>
-                    <p style="color: #666; margin-bottom: 0.5rem;"><strong>Author:</strong> ${authors}</p>
-                    <p style="color: #666; margin-bottom: 1rem;"><strong>Year:</strong> ${year}</p>
-                    <h3 style="color: #764ba2; margin-bottom: 0.5rem;">Description</h3>
-                    <p style="color: #333; line-height: 1.6; text-align: justify;">${description}</p>
+            <div class="modal-details">
+                <div class="modal-details-content">
+                    <h2 id="modal-title">${work.title}</h2>
+                    <p><strong>Author:</strong> ${authors}</p>
+                    <p><strong>Year:</strong> ${year}</p>
+                    <h3>Description</h3>
+                    <p class="modal-description">${description}</p>
                 </div>
             </div>
         `;
@@ -266,9 +266,9 @@ async function showBookDescription(work) {
     } catch (error) {
         const modalBody = document.getElementById('modal-body');
         modalBody.innerHTML = `
-            <div style="background: #ffe6e6; border: 2px solid #ff4444; border-radius: 10px; padding: 1.5rem; margin: 1rem;">
-                <p style="color: #cc0000; font-weight: bold;">⚠️ Error loading details</p>
-                <p style="color: #666;">${error.message}</p>
+            <div class="modal-error">
+                <p class="modal-error-title">⚠️ Error loading details</p>
+                <p class="modal-error-message">${error.message}</p>
             </div>
         `;
     }
