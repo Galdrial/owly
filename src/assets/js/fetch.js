@@ -7,10 +7,8 @@ const api = axios.create({
     timeout: parseInt(process.env.API_TIMEOUT) || 15000,
 });
 
-export function fetchBook() {
-    fetchData();
-    async function fetchData(){
-        try{
+export async function fetchBook() {
+    try{
             const searchName= document.getElementById('searchName').value.trim();
             
             if (!searchName) {
@@ -64,11 +62,11 @@ export function fetchBook() {
                     // Title
                     const titleElement = document.createElement('h3');
                     titleElement.textContent = work.title;
-                    titleElement.style.display = 'block';
                     
                     // Image with get for safe access
                     const imgElement = document.createElement('img');
-                    const coverId = get(work, 'cover_id') || get(work, 'cover_edition_key');
+                    const coverId = get(work, 'cover_id');
+                    const coverEditionKey = get(work, 'cover_edition_key');
                     
                     // Set explicit dimensions to prevent layout shift
                     imgElement.width = 180;
@@ -76,11 +74,9 @@ export function fetchBook() {
                     imgElement.loading = 'lazy';
                     
                     if (coverId) {
-                        if (get(work, 'cover_id')) {
-                            imgElement.src = `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
-                        } else {
-                            imgElement.src = `https://covers.openlibrary.org/b/olid/${coverId}-M.jpg`;
-                        }
+                        imgElement.src = `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
+                    } else if (coverEditionKey) {
+                        imgElement.src = `https://covers.openlibrary.org/b/olid/${coverEditionKey}-M.jpg`;
                     } else {
                         imgElement.src = 'https://openlibrary.org/images/icons/avatar_book-sm.png';
                     }
@@ -104,7 +100,6 @@ export function fetchBook() {
                     const authorElement = document.createElement('p');
                     const authorName = get(work, 'authors[0].name', 'Unknown author');
                     authorElement.textContent = authorName;
-                    authorElement.style.display = 'block';
                     
                     card.appendChild(titleElement);
                     card.appendChild(imgElement);
@@ -128,7 +123,6 @@ export function fetchBook() {
             
             // Hide loading and show cards
             loadingDiv.style.display = 'none';
-            appDiv.innerHTML = '';
             cards.forEach((card) => {
                 appDiv.appendChild(card);
             });
@@ -150,18 +144,12 @@ export function fetchBook() {
             }
             
             loadingDiv.innerHTML = `⚠️ ${errorMessage}`;
-            loadingDiv.style.color = '#c00';
-            loadingDiv.style.background = '#ffe0e0';
-            loadingDiv.style.padding = '1rem 2rem';
-            loadingDiv.style.borderRadius = '10px';
+            loadingDiv.classList.add('error');
             
             // Hide error after 5 seconds
             setTimeout(() => {
                 loadingDiv.style.display = 'none';
-                loadingDiv.style.background = '';
-                loadingDiv.style.padding = '';
-                loadingDiv.style.borderRadius = '';
-                loadingDiv.style.color = '';
+                loadingDiv.classList.remove('error');
                 loadingDiv.innerHTML = '⏳ Loading...';
             }, 5000);
             
@@ -169,7 +157,6 @@ export function fetchBook() {
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = '';
         }
-    }
 }
 
 // Function to show book description in a modal
