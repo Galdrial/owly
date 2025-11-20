@@ -4,7 +4,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   // Entry point: main JavaScript file
-  entry: './src/js/index.js',
+  entry: './src/assets/js/index.js',
   
   // Dove salvare il bundle finale
   output: {
