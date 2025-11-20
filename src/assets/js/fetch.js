@@ -51,7 +51,6 @@ export function fetchBook() {
                     // Card
                     const card = document.createElement('article');
                     card.className = 'book-card';
-                    card.style.opacity = '0';
                     card.setAttribute('role', 'article');
                     card.setAttribute('tabindex', '0');
                     card.setAttribute('aria-label', `${work.title} - Click for more details`);
@@ -64,6 +63,11 @@ export function fetchBook() {
                     // Image with get for safe access
                     const imgElement = document.createElement('img');
                     const coverId = get(work, 'cover_id') || get(work, 'cover_edition_key');
+                    
+                    // Set explicit dimensions to prevent layout shift
+                    imgElement.width = 180;
+                    imgElement.height = 270;
+                    imgElement.loading = 'lazy';
                     
                     if (coverId) {
                         if (get(work, 'cover_id')) {
@@ -117,20 +121,9 @@ export function fetchBook() {
             // Hide loading and show cards
             loadingDiv.style.display = 'none';
             appDiv.innerHTML = '';
-            cards.forEach((card, index) => {
+            cards.forEach((card) => {
                 appDiv.appendChild(card);
-                // Staggered fade-in animation
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.3s ease-in';
-                    card.style.opacity = '1';
-                }, index * 50);
             });
-            
-            // Add class to body for layout adjustment AFTER cards are in DOM
-            // Use setTimeout to trigger after the DOM has updated
-            setTimeout(() => {
-                document.body.classList.add('has-results');
-            }, 50);
         }
         catch(error){
             console.error(error);
@@ -164,7 +157,6 @@ export function fetchBook() {
                 loadingDiv.innerHTML = '⏳ Loading...';
             }, 5000);
             
-            document.body.classList.remove('has-results');
             // Clear app div
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = '';
