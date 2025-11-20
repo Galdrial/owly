@@ -85,6 +85,11 @@ module.exports = {
           to: 'screenshots',
           noErrorOnMissing: true,
         },
+        {
+          from: 'src/favicon.svg',
+          to: 'favicon.svg',
+          noErrorOnMissing: true,
+        },
       ],
     }),
   ],
