@@ -81,8 +81,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'src/assets/screenshots',
-          to: 'screenshots',
+          from: 'src/assets/img',
+          to: 'img',
           noErrorOnMissing: true,
         },
         {

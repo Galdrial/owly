@@ -38,8 +38,8 @@ A modern, responsive web application for searching and exploring books by catego
 
 ## 📸 Screenshots
 
-![Screenshot](src/assets/screenshots/owly1.png)
-![Screenshot](src/assets/screenshots/owly2.png)
+![Screenshot](src/assets/img/owly1.png)
+![Screenshot](src/assets/img/owly2.png)
 
 ## 🛠️ Technologies
 
