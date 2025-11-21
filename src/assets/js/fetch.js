@@ -50,7 +50,7 @@ export async function fetchBook() {
                 // Timeout after 5 seconds if image doesn't load
                 const timeout = setTimeout( () => {
                     resolve( card );
-                }, 5000 );
+                }, 2000 );
 
                 // Card
                 const card = document.createElement( 'article' );
